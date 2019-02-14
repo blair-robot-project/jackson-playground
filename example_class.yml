@@ -1,0 +1,56 @@
+---
+classname: "Class of 2023"
+teachers:
+    - students.Teacher:
+        '@id': mrsblah
+        name: "mrs. blah"
+        subject: "math"
+        numClasses: 4
+        numStudents: 183
+    - students.Teacher:
+        '@id': mraah
+        name: "mr. aah"
+        subject: "english"
+        numClasses: 2
+        numStudents: 75
+    - students.Teacher:
+        &tim
+        '@id': mrtim
+        name: "mr. tim"
+        subject: "science"
+        numClasses: 7
+        numStudents: 139
+    - students.Teacher:
+        <<: *tim
+        '@id': mrsub
+        name: "mr. sub"
+head:
+    students.Teacher:
+        mrsblah
+students:
+    - students.Student:
+        '@id': suzan
+        grade: 12
+        name: "suzan"
+    - students.LiveInStudent:
+        &building5Student
+        '@id': billy
+        grade: 10
+        name: "billy"
+        gpa: 3.67
+        buildingNum: 5
+        hasMealPlan: true
+    - students.LiveInStudent:
+        <<: *building5Student
+        '@id': bob
+        name: "bob"
+        gpa: 3.8
+    - students.LiveInStudent:
+        <<: *building5Student
+        '@id': Sally
+        name: "Sally"
+        gpa: 3.2
+        hasMealPlan: false
+valedictorian:
+    students.Student:
+        suzan

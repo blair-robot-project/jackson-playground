@@ -5,7 +5,7 @@ plugins {
 	id "application"
 }
 
-mainClassName = "Example"
+mainClassName = "ClassOfStudents"
 
 repositories {
 	mavenCentral()
