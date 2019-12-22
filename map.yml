@@ -1,0 +1,20 @@
+---
+classname: "Physics"
+teacher:
+  '@id': davis
+  name: "Dr. John Davis"
+  salary: 1000000
+students:
+  - students.Student:
+      '@id': susan
+      grade: 12
+      name: "Susan"
+  - students.LiveInStudent:
+      '@id': billy
+      grade: 10
+      name: "Billy"
+      gpa: 3.67
+      buildingNum: 5
+      hasMealPlan: true
+valedictorian:
+  susan

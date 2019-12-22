@@ -14,7 +14,13 @@ import java.util.Map;
 /**
  * A base class that calls the Jackson code to construct itself and in the process several students.
  */
-public class Example {
+public class Class {
+
+	/**
+	 * The teacher of the class.
+	 */
+	@NotNull
+	private final Teacher teacher;
 
 	/**
 	 * The best student in the class. Should also be in students.
@@ -42,31 +48,34 @@ public class Example {
 	 * @param classname     The name of the class.
 	 */
 	@JsonCreator
-	public Example(@NotNull @JsonProperty(required = true) Student valedictorian,
-	               @NotNull @JsonProperty(required = true) List<Student> students,
-	               @NotNull @JsonProperty(required = true) String classname) {
+	public Class(@NotNull @JsonProperty(required = true) Teacher teacher,
+				 @NotNull @JsonProperty(required = true) Student valedictorian,
+				 @NotNull @JsonProperty(required = true) List<Student> students,
+				 @NotNull @JsonProperty(required = true) String classname) {
+		this.teacher = teacher;
 		this.valedictorian = valedictorian;
 		this.students = students;
 		this.classname = classname;
 	}
 
 	/**
-	 * Reads the Yaml file and uses it to construct an {@link Example}.
+	 * Reads the Yaml file and uses it to construct an {@link Class}.
 	 *
 	 * @param args Command line arguments, not used.
-	 * @throws IOException If example.yml doesn't exist or isn't a proper YAML file.
+	 * @throws IOException If map.yml doesn't exist or isn't a proper YAML file.
 	 */
 	public static void main(String[] args) throws IOException {
 		Yaml yaml = new Yaml();
-		Map<?, ?> normalized = (Map<?, ?>) yaml.load(new FileReader("example.yml"));
+		Map<?, ?> normalized = (Map<?, ?>) yaml.load(new FileReader("map.yml"));
 		YAMLMapper mapper = new YAMLMapper();
 		//Turn the Map read by SnakeYaml into a String so Jackson can read it.
 		String fixed = mapper.writeValueAsString(normalized);
 		//Use a parameter name module so we don't have to specify name for every field.
 		mapper.registerModule(new ParameterNamesModule(JsonCreator.Mode.PROPERTIES));
 		//Deserialize the map into an object.
-		Example output = mapper.readValue(fixed, Example.class);
+		Class output = mapper.readValue(fixed, Class.class);
 		System.out.println("Class name: " + output.classname);
+		System.out.println("Teacher: " + output.teacher);
 		System.out.println("Valedictorian: " + output.valedictorian);
 		System.out.println("Students: " + output.students);
 		System.out.println("Valedictorian is first student in Students: " + (output.valedictorian == output.students.get(0)));
